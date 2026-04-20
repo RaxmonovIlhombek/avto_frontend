@@ -143,16 +143,16 @@ const ParkingMap = ({ openAuth }) => {
             <div className="w-12 h-1 bg-brand-primary rounded-full" />
             <span className="text-brand-primary font-black uppercase tracking-[0.3em] text-[10px]">Filiallarga bo'lingan xarita</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter">
-            SmartPark <span className="text-white/20 font-light">Filiallari</span>
+          <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter text-slate-900 dark:text-white">
+            SmartPark <span className="text-slate-400 dark:text-white/20 font-light">Filiallari</span>
           </h2>
         </div>
         
-        <div className="flex flex-wrap gap-4 bg-white/5 p-3 rounded-3xl border border-white/10 backdrop-blur-md">
+        <div className="flex flex-wrap gap-4 bg-slate-50 dark:bg-white/5 p-3 rounded-3xl border border-slate-200 dark:border-white/10 backdrop-blur-md">
           {Object.entries(statusColors).map(([status, style]) => (
             <div key={status} className="flex items-center gap-2 px-3">
               <div className={`w-3 h-3 rounded-full ${style.split(' ')[0]}`} />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/40">
                 {status === 'available' ? 'Bo\'sh' : status === 'booked' ? 'Band' : status === 'occupied' ? 'Moshina bor' : 'Xizmatda'}
               </span>
             </div>
@@ -169,7 +169,7 @@ const ParkingMap = ({ openAuth }) => {
             className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold transition-all whitespace-nowrap border ${
               selectedLotId === lot.id 
               ? 'bg-brand-primary text-white border-brand-primary shadow-lg shadow-brand-primary/30' 
-              : 'bg-white/5 text-white/40 border-white/10 hover:bg-white/10'
+              : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-white/40 border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10'
             }`}
           >
             <Building2 size={18} />
@@ -179,9 +179,9 @@ const ParkingMap = ({ openAuth }) => {
       </div>
 
       {/* 2D Map Visualization */}
-      <div className="bg-black/40 border border-white/5 rounded-[4rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-sm">
+      <div className="bg-slate-100/50 dark:bg-black/40 border border-slate-200 dark:border-white/5 rounded-[4rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-sm">
         <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-            <div className="absolute left-1/2 top-0 bottom-0 w-32 border-x-4 border-dashed border-white -translate-x-1/2" />
+            <div className="absolute left-1/2 top-0 bottom-0 w-32 border-x-4 border-dashed border-slate-900 dark:border-white -translate-x-1/2" />
         </div>
 
         <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
@@ -205,10 +205,10 @@ const ParkingMap = ({ openAuth }) => {
                   className={`w-full aspect-[2/3] rounded-2xl border-4 transition-all duration-300 flex flex-col items-center justify-between py-6 relative group ${statusColors[space.status] || statusColors.available} 
                   ${selectedSpace?.id === space.id ? 'ring-4 ring-brand-primary ring-offset-4 ring-offset-[#08060d]' : ''}`}
                 >
-                  <div className="absolute top-0 bottom-0 left-0 w-1 bg-white/10" />
-                  <div className="absolute top-0 bottom-0 right-0 w-1 bg-white/10" />
+                  <div className="absolute top-0 bottom-0 left-0 w-1 bg-slate-200 dark:bg-white/10" />
+                  <div className="absolute top-0 bottom-0 right-0 w-1 bg-slate-200 dark:bg-white/10" />
                   
-                  <div className="text-2xl font-black italic tracking-tighter z-10">{space.identifier}</div>
+                  <div className="text-2xl font-black italic tracking-tighter z-10 text-slate-800 dark:text-white">{space.identifier}</div>
                   
                   {space.status === 'available' ? (
                      <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
@@ -225,14 +225,14 @@ const ParkingMap = ({ openAuth }) => {
               </motion.div>
             ))
           ) : (
-             <div className="col-span-full py-20 text-center text-white/20 italic">
+             <div className="col-span-full py-20 text-center text-slate-400 dark:text-white/20 italic">
                Bu filialda hali turargohlar mavjud emas.
              </div>
           )}
         </div>
         
         <div className="mt-20 flex flex-col items-center">
-             <div className="text-[10px] font-bold uppercase tracking-[0.5em] text-white/20 mb-4 italic">MAIN ENTRANCE</div>
+             <div className="text-[10px] font-bold uppercase tracking-[0.5em] text-slate-400 dark:text-white/20 mb-4 italic">MAIN ENTRANCE</div>
              <div className="w-40 h-2 bg-gradient-to-r from-transparent via-brand-primary to-transparent rounded-full shadow-[0_0_20px_rgba(217,70,239,0.5)]" />
         </div>
       </div>
