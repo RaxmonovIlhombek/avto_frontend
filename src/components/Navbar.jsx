@@ -95,14 +95,14 @@ const Navbar = ({ onOpenAuth }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={toggleMenu}
-              className="fixed inset-0 top-[73px] bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 top-[73px] bg-black/60 backdrop-blur-sm z-40 lg:hidden pointer-events-auto"
             />
             <motion.div 
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-[73px] bottom-0 w-[80%] max-w-sm bg-[#16161d] p-8 flex flex-col gap-6 z-50 lg:hidden border-l border-white/10 shadow-2xl"
+              className="fixed right-0 top-[73px] bottom-0 w-[80%] max-w-sm bg-[#16161d] p-8 flex flex-col gap-6 z-50 lg:hidden border-l border-white/10 shadow-2xl pointer-events-auto"
             >
               <div className="flex flex-col gap-4">
                 <Link to="/" onClick={toggleMenu} className="flex items-center gap-4 text-lg font-bold text-white/80 p-4 bg-white/5 rounded-2xl border border-white/5">
