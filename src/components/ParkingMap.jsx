@@ -250,10 +250,10 @@ const ParkingMap = ({ openAuth }) => {
             
             <motion.div
               layoutId={`space-${selectedSpace.id}`}
-              className="relative w-full max-w-3xl bg-[#16161d] border border-white/10 rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)]"
+              className="relative w-full max-w-3xl bg-[#16161d] border border-white/10 rounded-[2rem] md:rounded-[4rem] overflow-y-auto max-h-[95vh] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)]"
             >
-              <div className="p-8 md:p-14">
-                <div className="flex justify-between items-start mb-12">
+              <div className="p-6 md:p-14">
+                <div className="flex justify-between items-start mb-8 md:mb-12">
                   <div className="space-y-3">
                     <div className="inline-flex items-center gap-2 bg-brand-primary text-white border border-brand-primary/20 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-brand-primary/40">
                       {bookingStatus === 'payment' ? 'Tasdiqlash' : 'Professional Booking'}
