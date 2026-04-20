@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: 'https://smartpark-api-3ul3.onrender.com/api/',
 });
 
 // Request interceptor to attach the token to every request
