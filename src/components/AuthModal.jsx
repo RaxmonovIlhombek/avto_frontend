@@ -65,11 +65,11 @@ const AuthModal = ({ isOpen, onClose }) => {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-md bg-[#16161d] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl"
+            className="relative w-full max-w-md bg-[#16161d] border border-white/10 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl"
           >
-            <div className="p-10">
+            <div className="p-6 sm:p-8 md:p-10">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="text-3xl font-black text-white">
+                <h3 className="text-2xl md:text-3xl font-black text-white">
                   {isLogin ? 'Xush kelibsiz' : 'Ro\'yxatdan o\'tish'}
                 </h3>
                 <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-xl transition-all">
