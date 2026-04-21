@@ -4,7 +4,6 @@ import { ChevronRight, Shield, Clock, CreditCard, Star, Users, MapPin, Zap, Tren
 import { useOutletContext, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { useLanguage } from '../context/LanguageContext';
 import heroBg from '../assets/hero_bg.png';
 import ParkingMap from '../components/ParkingMap';
 import FeatureCard from '../components/FeatureCard';

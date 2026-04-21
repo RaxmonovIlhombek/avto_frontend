@@ -11,7 +11,7 @@ import NotificationBell from './NotificationBell';
 const Navbar = ({ onOpenAuth }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -85,19 +85,6 @@ const Navbar = ({ onOpenAuth }) => {
           
           <div className="w-px h-8 bg-black/5 dark:bg-white/10" />
           
-          {/* Language Switcher */}
-          <div className="flex items-center bg-black/5 dark:bg-white/5 p-1 rounded-xl">
-            {['uz', 'ru', 'en'].map(l => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${lang === l ? 'bg-white dark:bg-white/10 text-brand-primary shadow-sm' : 'text-slate-400'}`}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
-
           <button 
             onClick={toggleTheme}
             className="p-3.5 bg-black/5 dark:bg-white/5 text-slate-400 hover:text-brand-primary rounded-2xl border border-black/5 dark:border-white/10 transition-all font-black text-[10px]"
