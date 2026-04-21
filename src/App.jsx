@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import CustomerLayout from './layouts/CustomerLayout';
@@ -46,6 +46,8 @@ function App() {
       </Route>
       {/* Standalone Profile Route */}
       <Route path="/profile" element={<Profile />} />
+      {/* Explicit Login Route Redirect */}
+      <Route path="/login" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

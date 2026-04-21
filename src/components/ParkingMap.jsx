@@ -203,7 +203,7 @@ const ParkingMap = ({ openAuth }) => {
                   whileTap={space.status === 'available' ? { scale: 0.95 } : {}}
                   onClick={() => space.status === 'available' && setSelectedSpace(space)}
                   className={`w-full aspect-[2/3] rounded-2xl border-4 transition-all duration-300 flex flex-col items-center justify-between py-6 relative group ${statusColors[space.status] || statusColors.available} 
-                  ${selectedSpace?.id === space.id ? 'ring-4 ring-brand-primary ring-offset-4 ring-offset-[#08060d]' : ''}`}
+                  ${selectedSpace?.id === space.id ? 'ring-4 ring-brand-primary ring-offset-4 dark:ring-offset-[#08060d] ring-offset-white' : ''}`}
                 >
                   <div className="absolute top-0 bottom-0 left-0 w-1 bg-slate-200 dark:bg-white/10" />
                   <div className="absolute top-0 bottom-0 right-0 w-1 bg-slate-200 dark:bg-white/10" />
@@ -250,7 +250,7 @@ const ParkingMap = ({ openAuth }) => {
             
             <motion.div
               layoutId={`space-${selectedSpace.id}`}
-              className="relative w-full max-w-3xl bg-[#16161d] border border-white/10 rounded-[2rem] md:rounded-[4rem] overflow-y-auto max-h-[95vh] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)]"
+              className="relative w-full max-w-3xl bg-white dark:bg-[#12121a] border border-slate-200 dark:border-white/10 rounded-[2rem] md:rounded-[4rem] overflow-y-auto max-h-[95vh] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)] dark:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] transition-colors duration-500"
             >
               <div className="p-6 md:p-14">
                 <div className="flex justify-between items-start mb-8 md:mb-12">
@@ -258,11 +258,11 @@ const ParkingMap = ({ openAuth }) => {
                     <div className="inline-flex items-center gap-2 bg-brand-primary text-white border border-brand-primary/20 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-brand-primary/40">
                       {bookingStatus === 'payment' ? 'Tasdiqlash' : 'Professional Booking'}
                     </div>
-                    <h3 className="text-5xl md:text-6xl font-black text-white italic tracking-tighter">
-                      Slot {selectedSpace.identifier} <span className="text-white/20 font-light">Details</span>
+                    <h3 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white italic tracking-tighter">
+                      Slot {selectedSpace.identifier} <span className="text-slate-900/20 dark:text-white/20 font-light">Details</span>
                     </h3>
                   </div>
-                  <button onClick={() => setSelectedSpace(null)} className="p-5 bg-white/5 hover:bg-rose-500/20 hover:text-rose-400 rounded-3xl transition-all text-white/20 border border-white/5">
+                  <button onClick={() => setSelectedSpace(null)} className="p-5 bg-black/5 dark:bg-white/5 hover:bg-rose-500/10 dark:hover:bg-rose-500/20 hover:text-rose-400 rounded-3xl transition-all text-slate-400 dark:text-white/20 border border-black/5 dark:border-white/5">
                     <X className="w-8 h-8" />
                   </button>
                 </div>
@@ -271,23 +271,23 @@ const ParkingMap = ({ openAuth }) => {
                   {bookingStatus === 'payment' ? (
                      <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="space-y-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div className="p-8 bg-white/5 rounded-[3rem] border border-white/10 space-y-6">
-                                <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest">To'lov miqdori</div>
-                                <div className="text-5xl font-black text-emerald-400 italic">
+                            <div className="p-8 bg-slate-50 dark:bg-white/5 rounded-[3rem] border border-slate-200 dark:border-white/10 space-y-6 transition-colors">
+                                <div className="text-[10px] font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest">To'lov miqdori</div>
+                                <div className="text-5xl font-black text-emerald-500 italic transition-colors">
                                     {calculateTotalPrice().toLocaleString()} <span className="text-sm font-normal opacity-40">so'm</span>
                                 </div>
-                                <div className="pt-6 border-t border-white/5 flex items-center gap-4 text-white/40 italic">
+                                <div className="pt-6 border-t border-slate-200 dark:border-white/5 flex items-center gap-4 text-slate-400 dark:text-white/40 italic">
                                     <Shield className="w-5 h-5" /> Secured by SSL 256-bit
                                 </div>
                             </div>
                             <div className="space-y-4">
                                 <div className="relative group">
-                                    <CreditCard className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors" />
-                                    <input type="text" placeholder="Karta raqami" defaultValue="8600 1234 5678 9012" className="w-full bg-black/40 border border-white/5 py-6 pl-16 pr-6 rounded-3xl text-white font-bold outline-none focus:border-brand-primary transition-all" />
+                                    <CreditCard className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors" />
+                                    <input type="text" placeholder="Karta raqami" defaultValue="8600 1234 5678 9012" className="w-full bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 py-6 pl-16 pr-6 rounded-3xl text-slate-900 dark:text-white font-bold outline-none focus:border-brand-primary transition-all" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <input type="text" placeholder="MM/YY" defaultValue="12/28" className="bg-black/40 border border-white/5 py-6 px-8 rounded-3xl text-white font-bold outline-none focus:border-brand-primary transition-all" />
-                                    <input type="password" placeholder="CVV" defaultValue="123" className="bg-black/40 border border-white/5 py-6 px-8 rounded-3xl text-white font-bold outline-none focus:border-brand-primary transition-all" />
+                                    <input type="text" placeholder="MM/YY" defaultValue="12/28" className="bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 py-6 px-8 rounded-3xl text-slate-900 dark:text-white font-bold outline-none focus:border-brand-primary transition-all" />
+                                    <input type="password" placeholder="CVV" defaultValue="123" className="bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5 py-6 px-8 rounded-3xl text-slate-900 dark:text-white font-bold outline-none focus:border-brand-primary transition-all" />
                                 </div>
                             </div>
                         </div>
@@ -302,15 +302,15 @@ const ParkingMap = ({ openAuth }) => {
                   ) : bookingStatus === 'loading' ? (
                      <div className="flex flex-col items-center justify-center py-40 gap-8">
                         <div className="w-24 h-24 border-8 border-brand-primary border-t-transparent rounded-full animate-spin shadow-2xl shadow-brand-primary/20" />
-                        <span className="text-white/40 font-black uppercase tracking-[0.5em] text-sm animate-pulse">Processing...</span>
+                        <span className="text-slate-400 dark:text-white/40 font-black uppercase tracking-[0.5em] text-sm animate-pulse">Processing...</span>
                      </div>
                   ) : bookingStatus === 'success' ? (
-                    <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center justify-center py-20 gap-10 text-emerald-400 text-center">
+                    <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center justify-center py-20 gap-10 text-emerald-500 text-center">
                       <div className="w-40 h-40 bg-emerald-500/10 rounded-[3rem] flex items-center justify-center border-4 border-emerald-500/20 shadow-2xl shadow-emerald-500/20">
                         <CheckCircle2 size={96} />
                       </div>
                       <div className="space-y-4">
-                        <h4 className="text-5xl font-black text-white italic tracking-tighter uppercase">Muvaffaqiyatli!</h4>
+                        <h4 className="text-5xl font-black text-slate-800 dark:text-white italic tracking-tighter uppercase uppercase">Muvaffaqiyatli!</h4>
                         <div className="flex justify-center mt-6">
                            <LicensePlate number={carNumber} label="TASDIQLANGAN RAQAM" />
                         </div>
@@ -318,17 +318,17 @@ const ParkingMap = ({ openAuth }) => {
                     </motion.div>
                   ) : (
                     <div className="space-y-10">
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           <div className="space-y-4">
                              <div className="flex justify-between items-center ml-4 mb-2">
-                               <label className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Moshina Raqami</label>
-                               <div className="flex bg-white/5 p-1 rounded-lg gap-1">
-                                  <button type="button" onClick={() => { setCarType('jismoniy'); setCarNumber(''); }} className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest transition-all ${carType === 'jismoniy' ? 'bg-brand-primary text-white shadow' : 'text-white/40 hover:text-white'}`}>Jismoniy</button>
-                                  <button type="button" onClick={() => { setCarType('yuridik'); setCarNumber(''); }} className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest transition-all ${carType === 'yuridik' ? 'bg-brand-primary text-white shadow' : 'text-white/40 hover:text-white'}`}>Yuridik</button>
+                               <label className="text-[10px] font-black text-slate-400 dark:text-white/30 uppercase tracking-[0.3em]">Moshina Raqami</label>
+                               <div className="flex bg-slate-100 dark:bg-white/5 p-1 rounded-lg gap-1 transition-colors">
+                                  <button type="button" onClick={() => { setCarType('jismoniy'); setCarNumber(''); }} className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest transition-all ${carType === 'jismoniy' ? 'bg-brand-primary text-white shadow' : 'text-slate-400 dark:text-white/40 hover:text-brand-primary dark:hover:text-white'}`}>Jismoniy</button>
+                                  <button type="button" onClick={() => { setCarType('yuridik'); setCarNumber(''); }} className={`px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest transition-all ${carType === 'yuridik' ? 'bg-brand-primary text-white shadow' : 'text-slate-400 dark:text-white/40 hover:text-brand-primary dark:hover:text-white'}`}>Yuridik</button>
                                </div>
                              </div>
                              <div className="relative group">
-                                <Car className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors z-10" />
+                                <Car className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors z-10" />
                                 {carType === 'jismoniy' ? (
                                     <IMaskInput
                                         mask="00 a 000 aa"
@@ -336,7 +336,7 @@ const ParkingMap = ({ openAuth }) => {
                                         placeholder="01 A 777 AA"
                                         value={carNumber}
                                         onAccept={(v) => setCarNumber(v.toUpperCase())}
-                                        className="w-full bg-white/5 border border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-white outline-none focus:border-brand-primary focus:bg-white/10 transition-all uppercase tracking-widest font-mono"
+                                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-slate-800 dark:text-white outline-none focus:border-brand-primary focus:bg-slate-100 dark:focus:bg-white/10 transition-all uppercase tracking-widest font-mono"
                                     />
                                 ) : (
                                     <IMaskInput
@@ -345,21 +345,21 @@ const ParkingMap = ({ openAuth }) => {
                                         placeholder="01 777 AAA"
                                         value={carNumber}
                                         onAccept={(v) => setCarNumber(v.toUpperCase())}
-                                        className="w-full bg-white/5 border border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-white outline-none focus:border-brand-primary focus:bg-white/10 transition-all uppercase tracking-widest font-mono"
+                                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-slate-800 dark:text-white outline-none focus:border-brand-primary focus:bg-slate-100 dark:focus:bg-white/10 transition-all uppercase tracking-widest font-mono"
                                     />
                                 )}
                              </div>
                           </div>
                           <div className="space-y-4">
-                             <label className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] ml-4">Telefon Raqami</label>
+                             <label className="text-[10px] font-black text-slate-400 dark:text-white/30 uppercase tracking-[0.3em] ml-4">Telefon Raqami</label>
                              <div className="relative group">
-                                <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors" />
+                                <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/20 w-6 h-6 group-focus-within:text-brand-primary transition-colors" />
                                 <IMaskInput
                                     mask="+{998} (00) 000-00-00"
                                     placeholder="+998 (90) 000-00-00"
                                     value={phoneNumber}
                                     onAccept={(value) => setPhoneNumber(value)}
-                                    className="w-full bg-white/5 border border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-white outline-none focus:border-brand-primary focus:bg-white/10 transition-all"
+                                    className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 py-6 pl-16 pr-6 rounded-[2.5rem] text-xl font-black text-slate-800 dark:text-white outline-none focus:border-brand-primary focus:bg-slate-100 dark:focus:bg-white/10 transition-all"
                                 />
                              </div>
                           </div>
@@ -367,42 +367,42 @@ const ParkingMap = ({ openAuth }) => {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-4">
-                          <label className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] ml-4">Davomiylik</label>
-                          <div className="flex gap-4 p-2 bg-white/5 rounded-[2.5rem] border border-white/5">
+                          <label className="text-[10px] font-black text-slate-400 dark:text-white/30 uppercase tracking-[0.3em] ml-4">Davomiylik</label>
+                          <div className="flex gap-4 p-2 bg-slate-50 dark:bg-white/5 rounded-[2.5rem] border border-slate-200 dark:border-white/5 transition-colors">
                              <div className="flex-grow relative">
                                 <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-primary w-5 h-5 pointer-events-none" />
-                                <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full bg-transparent py-5 pl-14 pr-4 rounded-3xl text-sm font-bold text-white outline-none" />
+                                <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} className="w-full bg-transparent py-5 pl-14 pr-4 rounded-3xl text-sm font-bold text-slate-800 dark:text-white outline-none" />
                              </div>
-                             <div className="flex-grow relative border-l border-white/10">
+                             <div className="flex-grow relative border-l border-slate-200 dark:border-white/10 transition-colors">
                                 <Clock className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-primary w-5 h-5 pointer-events-none" />
-                                <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full bg-transparent py-5 pl-14 pr-4 rounded-3xl text-sm font-bold text-white outline-none" />
+                                <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="w-full bg-transparent py-5 pl-14 pr-4 rounded-3xl text-sm font-bold text-slate-800 dark:text-white outline-none" />
                              </div>
                           </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-6 pt-6">
-                            <div className="p-6 bg-white/5 border border-white/10 rounded-3xl">
-                                <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-2">Tur</div>
-                                <div className="text-2xl font-black text-white italic uppercase tracking-tighter">{selectedSpace.space_type}</div>
+                            <div className="p-6 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl transition-colors">
+                                <div className="text-[10px] font-bold text-slate-400 dark:text-white/20 uppercase tracking-widest mb-2">Tur</div>
+                                <div className="text-2xl font-black text-slate-800 dark:text-white italic uppercase tracking-tighter transition-colors">{selectedSpace.space_type}</div>
                             </div>
-                            <div className="p-6 bg-white/5 border border-white/10 rounded-3xl">
-                                <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-2">Narx/S</div>
-                                <div className="text-2xl font-black text-emerald-400 italic">{parseInt(selectedSpace.price_per_hour).toLocaleString()}</div>
+                            <div className="p-6 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl transition-colors">
+                                <div className="text-[10px] font-bold text-slate-400 dark:text-white/20 uppercase tracking-widest mb-2">Narx/S</div>
+                                <div className="text-2xl font-black text-emerald-500 italic transition-colors">{parseInt(selectedSpace.price_per_hour).toLocaleString()}</div>
                             </div>
                         </div>
                       </div>
 
-                      <div className="pt-8 border-t border-white/5">
-                         <div className="flex justify-between items-center mb-10 bg-brand-primary/10 p-8 rounded-[3rem] border border-brand-primary/20">
+                      <div className="pt-8 border-t border-slate-200 dark:border-white/5 transition-colors">
+                         <div className="flex justify-between items-center mb-10 bg-brand-primary/5 dark:bg-brand-primary/10 p-8 rounded-[3rem] border border-brand-primary/10 dark:border-brand-primary/20 transition-all">
                             <div>
                                 <div className="text-[10px] font-black text-brand-primary uppercase tracking-[0.2em] mb-1">Taxminiy summa:</div>
-                                <div className="text-4xl font-black text-white italic tracking-tighter">
+                                <div className="text-4xl font-black text-slate-900 dark:text-white italic tracking-tighter transition-colors">
                                     {calculateTotalPrice().toLocaleString()} <span className="text-lg font-light opacity-40">so'm</span>
                                 </div>
                             </div>
-                            <div className="hidden md:block w-px h-12 bg-white/10 mx-8" />
+                            <div className="hidden md:block w-px h-12 bg-slate-200 dark:bg-white/10 mx-8 transition-colors" />
                             <div className="hidden md:block text-right">
-                                <div className="text-white/20 text-[10px] mb-1 font-bold">SAVOL BORMI?</div>
+                                <div className="text-slate-400 dark:text-white/20 text-[10px] mb-1 font-bold italic">SAVOL BORMI?</div>
                                 <div className="text-brand-primary font-bold">+998 71 200 00 00</div>
                             </div>
                          </div>

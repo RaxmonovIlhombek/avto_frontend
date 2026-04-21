@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { IMaskInput } from 'react-imask';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import LicensePlate from '../components/LicensePlate';
 
 const ROLE_META = {
@@ -62,6 +62,7 @@ const Btn = ({ children, icon, onClick, variant = 'primary', size = 'md', loadin
 
 export default function Profile() {
   const { user, login: updateAuthUser, logout, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const { theme } = useTheme();
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('info'); // 'info' | 'security' | 'activity'
@@ -179,6 +180,14 @@ export default function Profile() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 py-4">
+
+      {/* Back button */}
+      <button 
+        onClick={() => window.history.length > 2 ? navigate(-1) : navigate(user?.is_staff ? '/admin' : '/dashboard')}
+        className="mb-4 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-brand-primary transition-colors bg-slate-50 dark:bg-white/5 px-4 py-2 rounded-xl"
+      >
+        <ChevronLeft size={16} /> Orqaga
+      </button>
 
       {/* ── Profil header ── */}
       <Card className="mb-6 p-0 border-none shadow-xl dark:shadow-none">

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-primary: #aa3bff;
   --color-brand-secondary: #08060d;
@@ -16,7 +18,10 @@
   --bg-secondary: #f8fafc;
   --text-primary: #0f172a;
   --text-secondary: #64748b;
-  --border-color: #f1f5f9;
+  --border-color: #e1e7ef;
+  --card-bg: #ffffff;
+  --sidebar-bg: #1e293b;
+  --accent-glow: rgba(170, 59, 255, 0.15);
 }
 
 .dark {
@@ -27,6 +32,9 @@
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --border-color: rgba(255, 255, 255, 0.05);
+  --card-bg: #12121a;
+  --sidebar-bg: #0f172a;
+  --accent-glow: rgba(170, 59, 255, 0.4);
 }
 
 body {
@@ -34,26 +42,40 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-secondary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-x: hidden;
 }
 
 @layer utilities {
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08); /* Sophisticated slate shadow */
+    transition: background-color 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .dark .glass-card {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 
   .glass-card-hover {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--color-brand-primary);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px 0 rgba(15, 23, 42, 0.15);
+  }
+
+  .dark .glass-card-hover:hover {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-8px) scale(1.01);
     box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.5);
   }
 

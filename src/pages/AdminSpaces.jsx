@@ -5,7 +5,7 @@ import {
   Settings2, Tag, Info, AlertTriangle, Box,
   Building, Car, Calendar, Search, Filter, 
   ChevronRight, ArrowUpRight, LayoutGrid, List,
-  Zap, ShieldAlert, Sparkles, Layers
+  Zap, ShieldAlert, Sparkles, Layers, User
 } from 'lucide-react';
 import api from '../api';
 import toast from 'react-hot-toast';
@@ -33,10 +33,34 @@ const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                         className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-[#0a0a0f] shadow-2xl z-[101] p-10 flex flex-col transition-colors overflow-hidden"
                     >
-                        <div className="flex justify-between items-center mb-10">
+                        <div className="flex justify-between items-center mb-8">
                             <h3 className="text-3xl font-black italic uppercase tracking-tighter text-slate-800 dark:text-white">{t('slot_config')}</h3>
-                            <button onClick={onClose} className="p-4 bg-slate-50 dark:bg-white/5 text-slate-400 rounded-3xl hover:text-brand-primary transition-all"><X size={20}/></button>
+                            <button type="button" onClick={onClose} className="p-4 bg-slate-50 dark:bg-white/5 text-slate-400 rounded-3xl hover:text-brand-primary transition-all"><X size={20}/></button>
                         </div>
+
+                        {data?.current_booking_detail && (
+                            <div className="mb-8 p-6 bg-brand-primary/5 dark:bg-brand-primary/10 border border-brand-primary/20 rounded-[2rem]">
+                                <div className="text-[10px] font-black text-brand-primary uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <Sparkles size={14} /> Band Qilgan Mijoz
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-white dark:bg-[#12121a] shadow-sm rounded-xl flex items-center justify-center text-slate-400 shrink-0"><User size={18} /></div>
+                                        <div className="overflow-hidden">
+                                            <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">F.I.SH / Nik</div>
+                                            <div className="text-sm font-bold text-slate-800 dark:text-white truncate">{data.current_booking_detail.user_name}</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-white dark:bg-[#12121a] shadow-sm rounded-xl flex items-center justify-center text-slate-400 shrink-0"><Car size={18} /></div>
+                                        <div className="overflow-hidden">
+                                            <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">Mashina & Telefon</div>
+                                            <div className="text-sm font-bold text-slate-800 dark:text-white truncate">{data.current_booking_detail.car_number} • {data.current_booking_detail.phone_number}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         <form onSubmit={(e) => onSave(e, formData)} className="space-y-8 flex-grow overflow-y-auto pr-4 scrollbar-hide">
                             <div className="space-y-3">
@@ -46,7 +70,7 @@ const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
 
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{t('assigned_branch')}</label>
-                                <select required value={formData.parking_lot} onChange={(e) => setFormData({...formData, parking_lot: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none">
+                                <select required value={formData.parking_lot || ''} onChange={(e) => setFormData({...formData, parking_lot: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none transition-colors">
                                     <option value="">{t('select_location')}</option>
                                     {lots.map(lot => <option key={lot.id} value={lot.id}>{lot.name}</option>)}
                                 </select>
@@ -55,7 +79,7 @@ const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{t('asset_class')}</label>
-                                    <select value={formData.space_type} onChange={(e) => setFormData({...formData, space_type: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none">
+                                    <select value={formData.space_type || 'regular'} onChange={(e) => setFormData({...formData, space_type: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none transition-colors">
                                         <option value="regular">{t('regular_space')}</option>
                                         <option value="vip">{t('vip_premium')}</option>
                                         <option value="disabled">{t('accessibility')}</option>
@@ -63,7 +87,7 @@ const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
                                 </div>
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{t('live_status')}</label>
-                                    <select value={formData.status} onChange={(e) => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none">
+                                    <select value={formData.status || 'available'} onChange={(e) => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-3xl font-bold text-slate-600 dark:text-slate-300 outline-none transition-colors">
                                         <option value="available">{t('status_available')}</option>
                                         <option value="occupied">{t('status_occupied')}</option>
                                         <option value="booked">{t('status_booked')}</option>
@@ -144,7 +168,14 @@ const AdminSpaces = () => {
             setIsAdding(false);
             fetchData();
         } catch (error) {
-            toast.error(t('strategic_failure'));
+            const errData = error.response?.data;
+            if (errData?.identifier) {
+                toast.error("Bunday raqamli (yoki nomli) slot allaqachon qo'shilgan!");
+            } else if (errData?.parking_lot) {
+                toast.error("Iltimos, filialni to'g'ri tanlang!");
+            } else {
+                toast.error(t('strategic_failure') + " (Qayta tekshiring)");
+            }
         }
     };
 

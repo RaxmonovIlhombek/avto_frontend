@@ -24,12 +24,12 @@ const AdminSettings = () => {
   };
 
   const SettingSection = ({ icon: Icon, title, children }) => (
-    <div className="bg-white border border-slate-200 rounded-[3rem] p-10 shadow-sm">
+    <div className="bg-white dark:bg-[#12121a] border border-slate-200 dark:border-white/5 rounded-[3rem] p-10 shadow-sm transition-colors duration-500">
       <div className="flex items-center gap-4 mb-8">
-        <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400">
+        <div className="w-12 h-12 bg-slate-50 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 dark:text-slate-600 transition-colors">
            <Icon size={24} />
         </div>
-        <h3 className="text-xl font-black text-slate-800 italic uppercase tracking-tighter">{title}</h3>
+        <h3 className="text-xl font-black text-slate-800 dark:text-white italic uppercase tracking-tighter transition-colors">{title}</h3>
       </div>
       <div className="space-y-6">
         {children}
@@ -38,11 +38,11 @@ const AdminSettings = () => {
   );
 
   const Toggle = ({ enabled, onChange, label }) => (
-    <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
-      <span className="text-sm font-bold text-slate-600 uppercase tracking-widest">{label}</span>
+    <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 rounded-2xl transition-colors">
+      <span className="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest transition-colors">{label}</span>
       <button 
         onClick={() => onChange(!enabled)}
-        className={`w-14 h-8 rounded-full transition-all relative ${enabled ? 'bg-brand-primary' : 'bg-slate-200'}`}
+        className={`w-14 h-8 rounded-full transition-all relative ${enabled ? 'bg-brand-primary' : 'bg-slate-200 dark:bg-slate-800'}`}
       >
         <motion.div 
           animate={{ x: enabled ? 26 : 4 }}
@@ -56,12 +56,12 @@ const AdminSettings = () => {
     <div className="space-y-10 pb-20">
       <div className="flex justify-between items-end">
         <div>
-          <h2 className="text-4xl font-black text-slate-800 tracking-tighter italic uppercase">Tizim <span className="text-brand-primary">Sozlamalari</span></h2>
-          <p className="text-slate-400 text-sm font-medium">Loyiha parametrlarini global boshqarish paneli</p>
+          <h2 className="text-4xl font-black text-slate-800 dark:text-white tracking-tighter italic uppercase transition-colors">Tizim <span className="text-brand-primary">Sozlamalari</span></h2>
+          <p className="text-slate-400 dark:text-slate-600 text-sm font-medium transition-colors">Loyiha parametrlarini global boshqarish paneli</p>
         </div>
         <button 
             onClick={handleSave}
-            className="bg-slate-900 text-white flex items-center gap-3 px-10 py-5 rounded-[2.5rem] shadow-xl shadow-slate-900/20 font-black text-xs uppercase tracking-widest hover:bg-brand-primary transition-all group"
+            className="bg-slate-900 dark:bg-brand-primary text-white flex items-center gap-3 px-10 py-5 rounded-[2.5rem] shadow-xl shadow-slate-900/20 font-black text-xs uppercase tracking-widest hover:bg-brand-primary transition-all group"
         >
           <Save size={20} className="group-hover:rotate-12 transition-transform" /> O'zgarishlarni Saqlash
         </button>
@@ -70,32 +70,32 @@ const AdminSettings = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <SettingSection icon={Globe} title="Asosiy Ma'lumotlar">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-300 uppercase tracking-widest ml-1">Loyiha Nomi</label>
+              <label className="text-[10px] font-black text-slate-300 dark:text-white/20 uppercase tracking-widest ml-1">Loyiha Nomi</label>
               <input 
                 type="text" 
-                value={settings.siteName}
+                value={settings.siteName || ''}
                 onChange={(e) => setSettings({...settings, siteName: e.target.value})}
-                className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl font-bold text-slate-800 outline-none focus:border-brand-primary transition-all"
+                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-2xl font-bold text-slate-800 dark:text-white outline-none focus:border-brand-primary transition-all transition-colors"
               />
             </div>
             <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-300 uppercase tracking-widest ml-1">Valyuta</label>
+                    <label className="text-[10px] font-black text-slate-300 dark:text-white/20 uppercase tracking-widest ml-1">Valyuta</label>
                     <select 
-                        value={settings.currency}
+                        value={settings.currency || 'UZS'}
                         onChange={(e) => setSettings({...settings, currency: e.target.value})}
-                        className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl font-bold text-slate-800 outline-none"
+                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-2xl font-bold text-slate-800 dark:text-white outline-none transition-colors"
                     >
                         <option value="UZS">UZS (So'm)</option>
                         <option value="USD">USD ($)</option>
                     </select>
                 </div>
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-300 uppercase tracking-widest ml-1">Ish vaqti</label>
+                    <label className="text-[10px] font-black text-slate-300 dark:text-white/20 uppercase tracking-widest ml-1">Ish vaqti</label>
                     <select 
-                        value={settings.workHours}
+                        value={settings.workHours || '24/7'}
                         onChange={(e) => setSettings({...settings, workHours: e.target.value})}
-                        className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl font-bold text-slate-800 outline-none"
+                        className="w-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 p-5 rounded-2xl font-bold text-slate-800 dark:text-white outline-none transition-colors"
                     >
                         <option value="24/7">24 / 7 Rejim</option>
                         <option value="09:00-18:00">09:00 - 18:00</option>

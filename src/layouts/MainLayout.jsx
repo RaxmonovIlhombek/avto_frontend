@@ -8,12 +8,12 @@ const MainLayout = () => {
   const [authOpen, setAuthOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#08060d] text-white selection:bg-brand-primary/30 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#08060d] text-slate-900 dark:text-white selection:bg-brand-primary/30 relative overflow-hidden transition-colors duration-500">
       {/* Background Glowing Orbs */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-primary/20 blur-[150px] rounded-full animate-pulse-slow" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[150px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-[30%] right-[10%] w-[20%] h-[20%] bg-brand-primary/5 blur-[100px] rounded-full animate-float" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-primary/10 dark:bg-brand-primary/20 blur-[150px] rounded-full animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 dark:bg-purple-600/10 blur-[150px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-[30%] right-[10%] w-[20%] h-[20%] bg-brand-primary/3 dark:bg-brand-primary/5 blur-[100px] rounded-full animate-float" />
       </div>
 
       <Navbar onOpenAuth={() => setAuthOpen(true)} />

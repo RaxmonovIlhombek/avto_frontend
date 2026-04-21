@@ -53,7 +53,7 @@ const StatCard = ({ icon: Icon, title, value, detail, trend, color, delay }) => 
     </div>
     <div className="text-slate-400 dark:text-slate-600 text-[9px] font-black uppercase tracking-[0.3em] mb-1">{title}</div>
     <div className="text-4xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-brand-primary transition-colors tracking-tighter italic">{value}</div>
-    <div className="text-slate-400 dark:text-slate-700 text-[10px] font-bold flex items-center gap-2">
+    <div className="text-slate-400 dark:text-white/40 text-[10px] font-bold flex items-center gap-2 transition-colors">
         <Activity size={12} className="text-brand-primary" /> {detail}
     </div>
     {/* Animated background shape */}
@@ -180,10 +180,10 @@ const AdminDashboard = () => {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="10 10" stroke={isDark ? "#ffffff05" : "#f1f5f9"} vertical={false} />
-                    <XAxis dataKey="name" stroke={isDark ? "#ffffff20" : "#cbd5e1"} fontSize={10} fontWeight="900" tickLine={false} axisLine={false} dy={15} />
-                    <YAxis stroke={isDark ? "#ffffff20" : "#cbd5e1"} fontSize={10} fontWeight="900" tickLine={false} axisLine={false} dx={-15} />
+                    <XAxis dataKey="name" stroke={isDark ? "#ffffff20" : "#64748b"} fontSize={10} fontWeight="900" tickLine={false} axisLine={false} dy={15} />
+                    <YAxis stroke={isDark ? "#ffffff20" : "#64748b"} fontSize={10} fontWeight="900" tickLine={false} axisLine={false} dx={-15} />
                     <Tooltip 
-                      contentStyle={{ background: isDark ? '#1a1a24' : '#0f172a', border: 'none', borderRadius: '1.5rem', boxShadow: '0 25px 30px -5px rgba(0,0,0,0.4)', color: '#fff', padding: '20px' }}
+                      contentStyle={{ background: isDark ? '#1a1a24' : '#ffffff', border: 'none', borderRadius: '1.5rem', boxShadow: '0 25px 30px -5px rgba(0,0,0,0.2)', color: isDark ? '#fff' : '#0f172a', padding: '20px' }}
                       itemStyle={{ color: '#d946ef', fontWeight: '900', fontSize: '16px', textTransform: 'uppercase' }}
                       cursor={{ stroke: '#d946ef', strokeWidth: 1, strokeDasharray: '5 5' }}
                     />
@@ -195,26 +195,26 @@ const AdminDashboard = () => {
 
             {/* Sidebar Activity Feed */}
             <div className="lg:col-span-4 flex flex-col gap-10">
-                <div className="bg-slate-900 border border-white/5 p-10 rounded-[4rem] shadow-2xl flex-grow flex flex-col relative overflow-hidden group">
+                <div className="bg-white dark:bg-[#12121a] border border-slate-200 dark:border-white/5 p-10 rounded-[4rem] shadow-2xl flex-grow flex flex-col relative overflow-hidden group transition-colors duration-500">
                     <div className="flex justify-between items-center mb-8 relative z-10">
-                        <h3 className="text-xl font-black text-white italic uppercase tracking-tighter">Recent <span className="text-brand-primary">{t('recent_activity')}</span></h3>
+                        <h3 className="text-xl font-black text-slate-800 dark:text-white italic uppercase tracking-tighter transition-colors">Recent <span className="text-brand-primary">{t('recent_activity')}</span></h3>
                         <Activity className="text-brand-primary animate-pulse" size={20} />
                     </div>
                     <div className="space-y-6 overflow-y-auto max-h-[460px] pr-4 scrollbar-hide relative z-10">
                         {stats?.recent_bookings?.map((b, i) => (
-                            <div key={b.id} className="flex items-center gap-5 p-4 rounded-[1.5rem] bg-white/5 hover:bg-white/10 transition-all border border-transparent hover:border-white/5 group/item">
+                            <div key={b.id} className="flex items-center gap-5 p-4 rounded-[1.5rem] bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-all border border-transparent hover:border-slate-200 dark:hover:border-white/5 group/item transition-colors">
                                 <div className="w-12 h-12 rounded-xl bg-brand-primary/20 flex items-center justify-center text-brand-primary font-black text-sm group-hover/item:bg-brand-primary group-hover/item:text-white transition-all">
                                     {b.space_detail?.identifier?.charAt(0) || '#'}
                                 </div>
                                 <div className="flex-grow">
-                                    <div className="text-white text-xs font-black uppercase tracking-tight">{b.user_detail?.username || t('guest')}</div>
-                                    <div className="text-white/30 text-[9px] font-bold uppercase tracking-widest">{b.car_number || 'N/A'} • {b.created_at ? format(new Date(b.created_at), 'HH:mm') : '--:--'}</div>
+                                    <div className="text-slate-800 dark:text-white text-xs font-black uppercase tracking-tight transition-colors">{b.user_detail?.username || t('guest')}</div>
+                                    <div className="text-slate-400 dark:text-white/30 text-[9px] font-bold uppercase tracking-widest transition-colors">{b.car_number || 'N/A'} • {b.created_at ? format(new Date(b.created_at), 'HH:mm') : '--:--'}</div>
                                 </div>
-                                <ArrowUpRight className="text-white/20 group-hover/item:text-brand-primary group-hover/item:translate-x-1 group-hover/item:-translate-y-1 transition-all" size={16} />
+                                <ArrowUpRight className="text-slate-300 dark:text-white/20 group-hover/item:text-brand-primary group-hover/item:translate-x-1 group-hover/item:-translate-y-1 transition-all" size={16} />
                             </div>
                         ))}
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-900 to-transparent z-20 pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-[#12121a] to-transparent z-20 pointer-events-none transition-colors" />
                 </div>
 
                 {/* System Health Widget */}

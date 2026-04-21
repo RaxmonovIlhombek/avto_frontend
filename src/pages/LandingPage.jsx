@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Shield, Clock, CreditCard, Star, Users, MapPin, Zap, TrendingUp, Globe } from 'lucide-react';
 import { useOutletContext, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import heroBg from '../assets/hero_bg.png';
 import ParkingMap from '../components/ParkingMap';
 import FeatureCard from '../components/FeatureCard';
@@ -10,6 +12,8 @@ import FeatureCard from '../components/FeatureCard';
 const LandingPage = () => {
   const { setAuthOpen } = useOutletContext();
   const { user } = useAuth();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   
   const scrollToMap = () => {
     document.getElementById('map')?.scrollIntoView({ behavior: 'smooth' });
@@ -34,17 +38,17 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="bg-[#08060d]">
+    <div className="bg-slate-50 dark:bg-[#08060d] transition-colors duration-500">
       {/* Hero Section - 100vh Immersive */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src={heroBg} 
             alt="Futuristic Parking" 
-            className="w-full h-full object-cover opacity-30 scale-110"
+            className="w-full h-full object-cover opacity-20 dark:opacity-30 scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary via-brand-secondary/80 to-brand-secondary" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(170,59,255,0.15)_0%,transparent_70%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50 dark:from-[#08060d] via-slate-50/80 dark:via-[#08060d]/80 to-slate-50 dark:to-[#08060d]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(170,59,255,0.1)_0%,transparent_70%)]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
@@ -59,27 +63,27 @@ const LandingPage = () => {
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary">Next-Gen Parking Infrastructure</span>
               </motion.div>
               
-              <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tighter italic">
+              <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tighter italic text-slate-900 dark:text-white">
                 ZAMONAVIY <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-purple-400 to-brand-primary bg-[length:200%_auto] animate-gradient-x">
                   SMART PARK
                 </span>
               </motion.h1>
 
-              <motion.p variants={itemVariants} className="text-xl md:text-2xl text-white/40 mb-12 max-w-xl leading-relaxed">
+              <motion.p variants={itemVariants} className="text-xl md:text-2xl text-slate-900/40 dark:text-white/40 mb-12 max-w-xl leading-relaxed">
                 Toshkentning qoq markazida eng xavfsiz va aqlli avtoturargoh. Real vaqt rejimida boshqaruv va 100% kafolatlangan xizmat.
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6">
                 <button 
                   onClick={scrollToMap}
-                  className="bg-brand-primary hover:bg-white hover:text-brand-primary text-white px-12 py-6 rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 transition-all shadow-[0_20px_50px_rgba(170,59,255,0.3)] active:scale-95 group"
+                  className="bg-brand-primary hover:bg-slate-900 dark:hover:bg-white dark:hover:text-brand-primary text-white px-12 py-6 rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 transition-all shadow-[0_20px_50px_rgba(170,59,255,0.3)] active:scale-95 group"
                 >
                   JOY BAND QILISH <ChevronRight className="group-hover:translate-x-2 transition-transform" size={28} />
                 </button>
                 <button 
                   onClick={scrollToMap}
-                  className="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-10 py-6 rounded-[2.5rem] font-bold text-xl transition-all backdrop-blur-xl flex items-center gap-3"
+                  className="bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 text-slate-800 dark:text-white px-10 py-6 rounded-[2.5rem] font-bold text-xl transition-all backdrop-blur-xl flex items-center gap-3"
                 >
                   <MapPin size={24} className="text-brand-primary" /> Xaritani ochish
                 </button>
@@ -106,7 +110,7 @@ const LandingPage = () => {
               {/* Floating Status Card */}
               <div className="relative z-10 glass-card p-12 rounded-[4rem] shadow-2xl animate-float">
                 <div className="space-y-12">
-                  <div className="flex justify-between items-center text-white">
+                  <div className="flex justify-between items-center text-slate-900 dark:text-white">
                     <div>
                       <div className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-2">Live Capacity</div>
                       <div className="text-7xl font-black italic">84<span className="text-2xl opacity-20">%</span></div>
@@ -126,13 +130,13 @@ const LandingPage = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-8">
-                    <div className="p-8 bg-white/5 rounded-[3rem] border border-white/5">
+                    <div className="p-8 bg-black/5 dark:bg-white/5 rounded-[3rem] border border-black/5 dark:border-white/5">
                       <div className="text-[10px] font-black opacity-30 uppercase tracking-widest mb-2 italic">Active Users</div>
-                      <div className="text-4xl font-black">1.8k+</div>
+                      <div className="text-4xl font-black text-slate-800 dark:text-white">1.8k+</div>
                     </div>
-                    <div className="p-8 bg-white/5 rounded-[3rem] border border-white/5">
+                    <div className="p-8 bg-black/5 dark:bg-white/5 rounded-[3rem] border border-black/5 dark:border-white/5">
                       <div className="text-[10px] font-black opacity-30 uppercase tracking-widest mb-2 italic">Secured Ops</div>
-                      <div className="text-4xl font-black">100%</div>
+                      <div className="text-4xl font-black text-slate-800 dark:text-white">100%</div>
                     </div>
                   </div>
                 </div>
@@ -167,8 +171,8 @@ const LandingPage = () => {
               { val: "99.9%", label: "Uptime" }
             ].map((stat, i) => (
               <div key={i} className="text-center group">
-                <div className="text-4xl md:text-6xl font-black text-white italic mb-2 tracking-tighter group-hover:text-brand-primary transition-colors">{stat.val}</div>
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">{stat.label}</div>
+                <div className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white italic mb-2 tracking-tighter group-hover:text-brand-primary transition-colors">{stat.val}</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/20 dark:text-white/20 italic">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -183,12 +187,12 @@ const LandingPage = () => {
               <div className="w-12 h-1 bg-brand-primary rounded-full" />
               <span className="text-brand-primary font-black uppercase tracking-[0.4em] text-[10px]">Bizning tizim afzalliklari</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">
+            <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter leading-none text-slate-900 dark:text-white">
               YUQORI DARAJADAGI <br />
-              <span className="text-white/20">XAVFSIZLIK VA QULAYLIK</span>
+              <span className="text-slate-900/20 dark:text-white/20">XAVFSIZLIK VA QULAYLIK</span>
             </h2>
           </div>
-          <p className="text-white/20 text-lg max-w-sm leading-relaxed italic">
+          <p className="text-slate-900/40 dark:text-white/20 text-lg max-w-sm leading-relaxed italic">
             SmartPark - bu shunchaki joy emas, bu sifat va eng so'nggi texnologiyalar uyg'unligi.
           </p>
         </div>
@@ -223,9 +227,9 @@ const LandingPage = () => {
 
       {/* Hero-like Map Section */}
       <div className="relative group">
-        <div className="absolute inset-x-0 -top-40 h-80 bg-gradient-to-b from-[#08060d] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-x-0 -top-40 h-80 bg-gradient-to-b from-slate-50 dark:from-[#08060d] to-transparent z-10 pointer-events-none transition-colors" />
         <ParkingMap openAuth={() => setAuthOpen(true)} />
-        <div className="absolute inset-x-0 -bottom-40 h-80 bg-gradient-to-t from-[#08060d] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-x-0 -bottom-40 h-80 bg-gradient-to-t from-slate-50 dark:from-[#08060d] to-transparent z-10 pointer-events-none transition-colors" />
       </div>
 
       {/* Trust Quote / Call to Action */}
@@ -241,12 +245,12 @@ const LandingPage = () => {
           <div className="inline-flex gap-1 mb-6 text-brand-primary">
             {[1,2,3,4,5].map(i => <Star key={i} size={20} fill="currentColor" />)}
           </div>
-          <h2 className="text-4xl md:text-6xl font-black mb-12 italic tracking-tighter leading-tight italic">
+          <h2 className="text-4xl md:text-6xl font-black mb-12 italic tracking-tighter leading-tight text-slate-900 dark:text-white">
             "SMART PARK BILAN TURARGOH TOPISH MUAMMO EMAS, BU HUZURBASH XIZMATDIR."
           </h2>
           <button 
             onClick={scrollToMap}
-            className="px-16 py-8 bg-white text-[#08060d] rounded-[3rem] font-black text-3xl hover:bg-brand-primary hover:text-white transition-all shadow-2xl shadow-white/10 active:scale-95"
+            className="px-16 py-8 bg-slate-900 dark:bg-white text-white dark:text-[#08060d] rounded-[3rem] font-black text-3xl hover:bg-brand-primary hover:text-white transition-all shadow-2xl shadow-black/10 dark:shadow-white/10 active:scale-95"
           >
             HOZIROQ BOSHLANG
           </button>

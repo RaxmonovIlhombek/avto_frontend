@@ -31,7 +31,7 @@ const CustomerSidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <aside className={`
-      fixed inset-y-0 left-0 z-50 w-72 bg-[#0f172a] transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0
+      fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 dark:bg-[#0f172a] transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0
       ${isOpen ? 'translate-x-0' : '-translate-x-full'}
     `}>
       <div className="h-full flex flex-col p-6">
