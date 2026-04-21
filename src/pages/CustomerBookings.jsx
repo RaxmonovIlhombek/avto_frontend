@@ -9,12 +9,16 @@ import api from '../api';
 import { useLanguage } from '../context/LanguageContext';
 import toast from 'react-hot-toast';
 import LicensePlate from '../components/LicensePlate';
+import QRModal from '../components/QRModal';
+import { QrCode } from 'lucide-react';
 
 const CustomerBookings = () => {
     const { t } = useLanguage();
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
+    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
     useEffect(() => {
         fetchBookings();
@@ -116,9 +120,22 @@ const CustomerBookings = () => {
                                                 </div>
                                             </div>
 
-                                            <button className="p-4 bg-slate-50 dark:bg-white/5 text-slate-300 rounded-2xl hover:bg-brand-primary hover:text-white transition-all transform group-hover:scale-110 active:scale-95">
-                                                <ArrowUpRight size={20} />
-                                            </button>
+                                            <div className="flex items-center gap-4">
+                                                <button 
+                                                    onClick={() => {
+                                                        setSelectedBooking(booking);
+                                                        setIsQRModalOpen(true);
+                                                    }}
+                                                    className="p-4 bg-brand-primary/10 text-brand-primary rounded-2xl hover:bg-brand-primary hover:text-white transition-all transform hover:scale-110 active:scale-95"
+                                                    title={t('qr_kod')}
+                                                >
+                                                    <QrCode size={20} />
+                                                </button>
+
+                                                <button className="p-4 bg-slate-50 dark:bg-white/5 text-slate-300 rounded-2xl hover:bg-brand-primary hover:text-white transition-all transform group-hover:scale-110 active:scale-95">
+                                                    <ArrowUpRight size={20} />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="absolute -bottom-10 -right-10 opacity-5 group-hover:opacity-10 group-hover:scale-125 transition-all">
@@ -138,6 +155,12 @@ const CustomerBookings = () => {
                     </div>
                 )}
             </div>
+
+            <QRModal 
+                isOpen={isQRModalOpen} 
+                onClose={() => setIsQRModalOpen(false)} 
+                booking={selectedBooking} 
+            />
         </div>
     );
 };
