@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
-const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
+const SpaceSlideOver = ({ data, isOpen, onClose, onSave, onDelete, lots }) => {
     const [formData, setFormData] = useState(data || { 
         identifier: '', space_type: 'regular', status: 'available', 
         price_per_hour: 5000, parking_lot: lots[0]?.id || ''
@@ -104,9 +104,25 @@ const SpaceSlideOver = ({ data, isOpen, onClose, onSave, lots }) => {
                                 </div>
                             </div>
 
-                            <button type="submit" className="w-full bg-brand-primary text-white py-6 rounded-3xl font-black text-xl shadow-xl shadow-brand-primary/30 mt-6 flex items-center justify-center gap-4 active:scale-95 transition-all">
-                                <Check size={24} /> {data?.id ? t('commit_btn') : t('deploy_btn')}
-                            </button>
+                            <div className="grid grid-cols-2 gap-4 mt-6">
+                                {data?.id && (
+                                    <button 
+                                        type="button" 
+                                        onClick={() => {
+                                            if (window.confirm(t('terminate_space_prompt'))) {
+                                                onDelete(data.id);
+                                                onClose();
+                                            }
+                                        }}
+                                        className="bg-rose-500/10 border border-rose-500/20 text-rose-500 py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-4 hover:bg-rose-500 hover:text-white transition-all"
+                                    >
+                                        <Trash2 size={24} /> {t('o_chirish')}
+                                    </button>
+                                )}
+                                <button type="submit" className={`bg-brand-primary text-white py-6 rounded-3xl font-black text-xl shadow-xl shadow-brand-primary/30 flex items-center justify-center gap-4 active:scale-95 transition-all ${data?.id ? 'col-span-1' : 'w-full'}`}>
+                                    <Check size={24} /> {data?.id ? t('commit_btn') : t('deploy_btn')}
+                                </button>
+                            </div>
                         </form>
                     </motion.div>
                 </>
@@ -130,6 +146,7 @@ const AdminSpaces = () => {
     const [isAdding, setIsAdding] = useState(false);
     const [selectedLot, setSelectedLot] = useState('all');
     const [search, setSearch] = useState('');
+    const [bulkRange, setBulkRange] = useState('');
     const { t } = useLanguage();
     const { theme } = useTheme();
     const isDark = theme === 'dark';
@@ -180,13 +197,49 @@ const AdminSpaces = () => {
     };
 
     const deleteSpace = async (id) => {
-        if (!window.confirm(t('terminate_space_prompt'))) return;
         try {
             await api.delete(`spaces/${id}/`);
             toast.success(t('space_deleted'));
             fetchData();
         } catch (error) {
-            toast.error(t('delete_failed'));
+            toast.error(error.response?.data?.error || t('delete_failed'));
+        }
+    };
+
+    const handleBulkDelete = async () => {
+        if (!bulkRange) return toast.error("Iltimos, o'chiriladigan sektorlarni kiriting!");
+        if (!window.confirm(t('delete_confirm'))) return;
+
+        try {
+            let idsToDelete = [];
+            
+            // Logic to parse range (A1-A10) or comma-separated list
+            if (bulkRange.includes('-')) {
+                const [start, end] = bulkRange.split('-');
+                const prefix = start.match(/[a-zA-Z]+/)[0];
+                const startNum = parseInt(start.match(/\d+/)[0]);
+                const endNum = parseInt(end.match(/\d+/)[0]);
+                
+                const identifiers = [];
+                for (let i = startNum; i <= endNum; i++) {
+                    identifiers.push(`${prefix}${i}`);
+                }
+                idsToDelete = spaces.filter(s => identifiers.includes(s.identifier)).map(s => s.id);
+            } else {
+                const identifiers = bulkRange.split(',').map(s => s.trim());
+                idsToDelete = spaces.filter(s => identifiers.includes(s.identifier)).map(s => s.id);
+            }
+
+            if (idsToDelete.length === 0) {
+                return toast.error("Hech qanday mos keladigan sektor topilmadi!");
+            }
+
+            const res = await api.post('spaces/bulk_delete/', { ids: idsToDelete });
+            toast.success(res.data.message);
+            setBulkRange('');
+            fetchData();
+        } catch (error) {
+            toast.error(error.response?.data?.error || "Ommaviy o'chirishda xatolik");
         }
     };
 
@@ -308,26 +361,37 @@ const AdminSpaces = () => {
                  <Box className="absolute -bottom-20 -right-20 w-80 h-80 text-slate-50/50 dark:text-white/[0.02] -rotate-12 pointer-events-none" size={320} />
             </div>
 
-            {/* Quick Batch Tools (Simple Simulation for Bulk Add) */}
-            <div className="bg-slate-900 p-10 rounded-[4rem] text-white flex flex-col md:flex-row items-center justify-between gap-10 group overflow-hidden relative">
+            <div className="bg-slate-900 p-10 rounded-[4rem] text-white flex flex-col md:flex-row items-center justify-between gap-10 group overflow-hidden relative border border-white/5 shadow-2xl">
                 <div className="max-w-md relative z-10">
-                    <h4 className="text-3xl font-black italic uppercase italic tracking-tighter mb-2">{t('bulk_generation_terminal')}</h4>
+                    <h4 className="text-3xl font-black italic uppercase tracking-tighter mb-2 text-rose-500">{t('bulk_generation_terminal')}</h4>
                     <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">{t('bulk_gen_desc')}</p>
                 </div>
                 <div className="flex gap-4 w-full md:w-auto relative z-10">
-                    <div className="flex items-center bg-white/5 border border-white/10 rounded-3xl p-2 pl-6 gap-6">
+                    <div className="flex items-center bg-white/5 border border-white/10 rounded-3xl p-2 pl-6 gap-6 focus-within:border-rose-500/50 transition-all">
                         <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{t('sequence_range')}</span>
-                        <input type="text" placeholder={t('sequence_placeholder')} className="bg-transparent text-brand-primary font-black italic text-xl outline-none w-32 placeholder:text-white/10" />
+                        <input 
+                            type="text" 
+                            value={bulkRange}
+                            onChange={(e) => setBulkRange(e.target.value)}
+                            placeholder={t('sequence_placeholder')} 
+                            className="bg-transparent text-rose-400 font-black italic text-xl outline-none w-48 placeholder:text-white/10" 
+                        />
                     </div>
-                    <button className="bg-brand-primary px-10 py-5 rounded-3xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl shadow-brand-primary/40 hover:scale-105 active:scale-95 transition-all">{t('execute_btn')}</button>
+                    <button 
+                        onClick={handleBulkDelete}
+                        className="bg-rose-600 px-10 py-5 rounded-3xl font-black text-[10px] uppercase tracking-[0.3em] shadow-2xl shadow-rose-600/40 hover:scale-105 active:scale-95 transition-all"
+                    >
+                        {t('execute_btn')}
+                    </button>
                 </div>
-                <Zap className="absolute -bottom-10 -left-10 w-48 h-48 text-white/5 group-hover:text-white/10 transition-colors" size={192} />
+                <Trash2 className="absolute -bottom-10 -left-10 w-48 h-48 text-white/5 group-hover:text-rose-500/10 transition-colors" size={192} />
             </div>
 
             <SpaceSlideOver 
                 data={editingSpace} isOpen={!!editingSpace || isAdding} 
                 onClose={() => { setEditingSpace(null); setIsAdding(false); }} 
                 onSave={handleSave} 
+                onDelete={deleteSpace}
                 lots={lots}
             />
         </div>
